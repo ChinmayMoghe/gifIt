@@ -1,43 +1,25 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import style from './App.module.css';
+import {createFFmpeg,fetchFile} from '@ffmpeg/ffmpeg';
+
+const ffmpeg = createFFmpeg({log:true});
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [ready,setReady] = useState(false);
+  const load = async () => {
+    await ffmpeg.load();
+    setReady(true);
+  }
+  const handleFileUpload= (ev) => {};
+  useEffect(()=>{
+    load();
+  },[]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className={style.App}>
+      <h1>GIF it</h1>
+      {ready ? <><section className={style.video_upload}>
+      </section>
+      <section className={style.gif_result}></section></>:<>Loading...</>}
     </div>
   )
 }
