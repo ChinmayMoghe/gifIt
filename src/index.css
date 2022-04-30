@@ -13,3 +13,19 @@ body {
   font-size: 1.6rem; 
   font-family: 'Montserrat', sans-serif;
 }
+
+button {
+  border-radius: 5px;
+  border:none;
+  padding:1rem;
+  cursor: pointer;
+  transition: transform 5ms ease-in-out;
+}
+
+button:active {
+  transform: translateY(5px);
+}
+
+*:focus {
+  outline:1px dashed black;
+}
