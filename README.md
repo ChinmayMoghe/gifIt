@@ -1,5 +1,7 @@
 ### GIF it 📦
 
+Live at : https://relaxed-meerkat-7d7475.netlify.app/
+
 A simple web application built using React, and ffmpeg.wasm (✨awesome video/audio editing utility) to create gifs out of any video clips.
 
 To run this application:
