@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import style from './App.module.css';
 import {createFFmpeg,fetchFile} from '@ffmpeg/ffmpeg';
-
+import If from './components/If';
 const ffmpeg = createFFmpeg({log:true});
 
 function App() {
   const [ready,setReady] = useState(false);
   const [video,setVideo] = useState();
   const [gif,setGif] = useState();
+  
   const load = async () => {
     await ffmpeg.load();
     setReady(true);
@@ -20,7 +21,7 @@ function App() {
     try{
     ffmpeg.FS('writeFile','test.mp4',await fetchFile(video));
     //Run the ffmpeg command
-    await ffmpeg.run('-i','test.mp4','-t','2.5','-ss','2.0','-r','10','-f','gif','out.gif');
+    await ffmpeg.run('-i','test.mp4','-t','2.5','-ss','2.0','-f','gif','out.gif');
 
     const data = ffmpeg.FS('readFile','out.gif');
     const image = new Blob([data.buffer],{type:'image/gif'});
@@ -35,8 +36,11 @@ function App() {
   },[]);
   return (
     <div className={style.App}>
-      <h1>GIF it</h1>
-      {ready ? <><section className={style.video_upload}>
+      <header>
+      <h1 className={style.title}>GIF it</h1>
+      </header>
+      <If condition={ready}>
+      <section className={style.video_upload}>
         <div>
           {video && <video controls width={250} src={URL.createObjectURL(video)}></video>}
         </div>
@@ -45,7 +49,11 @@ function App() {
       <section className={style.gif_result}>
         <button onClick={convertToGif}>Convert</button>
         {gif && <img width={250} src={gif}/>}
-        </section></>:<>Loading...</>}
+        </section>
+      </If>
+      <If condition={!ready}>
+        Loading...
+      </If>
     </div>
   )
 }
