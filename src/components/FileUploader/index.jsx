@@ -5,6 +5,7 @@ const FileUploader = ({ onChange }) => {
   const handleClick = () => {
     fileUploadRef.current.click();
   };
+
   return (
     <>
       <button onClick={handleClick}>Upload file</button>

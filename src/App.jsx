@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import style from "./App.module.css";
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import If from "./components/If";
 import FileUploader from "./components/FileUploader";
+import Cube from "./components/Cube";
 const ffmpeg = createFFmpeg({ log: true });
 
 function App() {
@@ -25,10 +26,10 @@ function App() {
       await ffmpeg.run(
         "-i",
         "test.mp4",
-        "-t",
-        "2.5",
         "-ss",
-        "2.0",
+        "5",
+        "-t",
+        "2",
         "-f",
         "gif",
         "out.gif"
@@ -42,35 +43,45 @@ function App() {
       console.log(e);
     }
   };
+
   useEffect(() => {
     load();
   }, []);
+
   return (
     <div className={style.App}>
       <header className={style.title}>
-        <h1>GIF it</h1>
+        <Cube>
+          <h1 style={{ padding: "2rem" }}>GIF it</h1>
+        </Cube>
       </header>
+
       <If condition={ready}>
-        <section className={style.video_upload}>
-          <If condition={video}>
-            <div>
-              <video
-                controls
-                width={250}
-                src={video ? URL.createObjectURL(video) : ""}
-              />
-            </div>
-          </If>
-          <div className={style.controls}>
-            <FileUploader onChange={handleFileUpload} />
+        <Cube>
+          <section className={style.video_upload}>
+            <p>Upload video file to convert to animated gif</p>
             <If condition={video}>
-              <button onClick={convertToGif}>Convert</button>
+              <div>
+                <video
+                  controls
+                  width={400}
+                  src={video ? URL.createObjectURL(video) : ""}
+                />
+              </div>
             </If>
-          </div>
-        </section>
+            <div className={style.controls}>
+              <FileUploader onChange={handleFileUpload} />
+              <If condition={video}>
+                <button onClick={convertToGif}>Convert</button>
+              </If>
+            </div>
+          </section>
+        </Cube>
         <section className={style.gif_result}>
           <If condition={gif}>
-            <img width={250} src={gif} />
+            <Cube>
+              <img width={250} src={gif} />
+            </Cube>
           </If>
         </section>
       </If>
