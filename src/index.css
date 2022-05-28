@@ -1,4 +1,6 @@
-*,*::before,*::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
 }
@@ -10,14 +12,15 @@ html {
 
 body {
   /*Reset to original font size*/
-  font-size: 1.6rem; 
-  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6rem;
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
 }
 
 button {
   border-radius: 5px;
-  border:none;
-  padding:1rem;
+  border: none;
+  padding: 1rem;
   cursor: pointer;
   transition: transform 5ms ease-in-out;
 }
@@ -27,5 +30,5 @@ button:active {
 }
 
 *:focus {
-  outline:1px dashed black;
+  outline: 1px solid invert;
 }
