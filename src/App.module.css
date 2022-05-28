@@ -11,6 +11,8 @@
 .title {
   text-align: center;
   grid-area: 1/1/2 / span 2;
+  /* temporary fix for position - hacky solution */
+  margin: 100px 0 0 0;
 }
 
 .video_upload,
