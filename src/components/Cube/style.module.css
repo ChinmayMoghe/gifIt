@@ -3,18 +3,28 @@
   --cube-width: 100px;
   --cube-height: 100px;
   --cube-depth: calc(var(--cube-height) / 2);
-  --face-color: rgba(128, 236, 166, 1);
+  --face-color: rgba(97, 239, 156, 1);
   --face-border: rgba(39, 43, 40, 0.452);
+  --face-border-width: 1px;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateX(-30deg) rotateY(30deg);
+  transform: rotateX(-10deg) rotateY(30deg);
   transform-origin: center center 0;
+  /*important - 
+  1. use this grid to align all divs one below other in a stack
+  2. position the divs relative to original position to form a cube
+  */
+  display: grid;
+  place-items: center;
+  grid-template-areas: "cube-container";
 }
 
 .cube_face {
-  position: absolute;
+  position: relative;
   background-color: var(--face-color);
-  border: 3px solid var(--face-border);
+  border: var(--face-border-width) solid var(--face-border);
+  grid-area: cube-container;
+  box-shadow: 0px 0px 10px 0px var(--face-color);
 }
 
 .front_face {
@@ -42,14 +52,14 @@
 }
 
 .right_face {
-  left: calc(var(--cube-depth) * -1);
-  transform: rotateY(90deg) translateZ(calc(var(--cube-width)));
+  left: 50%;
+  transform: rotateY(90deg);
   width: var(--cube-height);
   height: var(--cube-height);
 }
 
 .left_face {
-  left: calc(var(--cube-depth) * -1);
+  left: -50%;
   transform: rotateY(90deg);
   width: var(--cube-height);
   height: var(--cube-height);

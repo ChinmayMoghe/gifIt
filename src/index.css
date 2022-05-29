@@ -15,6 +15,7 @@ body {
   font-size: 1.6rem;
   font-family: "Montserrat", sans-serif;
   min-height: 100vh;
+  background-color: rgb(3, 3, 3);
 }
 
 button {
@@ -22,11 +23,11 @@ button {
   border: none;
   padding: 1rem;
   cursor: pointer;
-  transition: transform 5ms ease-in-out;
+  transition: transform 50ms ease-in-out;
 }
 
 button:active {
-  transform: translateY(5px);
+  transform: translateY(5px) scale(0.7);
 }
 
 *:focus {
