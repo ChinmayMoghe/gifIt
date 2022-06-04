@@ -4,21 +4,40 @@ import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import If from "./components/If";
 import FileUploader from "./components/FileUploader";
 import Cube from "./components/Cube";
+import classNames from "classnames";
 const ffmpeg = createFFmpeg({ log: true });
 
 function App() {
   const [ready, setReady] = useState(false);
   const [video, setVideo] = useState();
-  const [gif, setGif] = useState();
-
+  const [gif, setGif] = useState("");
+  const convertBtnCubeRef = useRef();
   const load = async () => {
     await ffmpeg.load();
     setReady(true);
   };
   const handleFileUpload = (ev) => {
+    console.log("%cApp.jsx line:20 ev.target.files", "color: #007acc;", ev);
     setVideo(ev.target.files?.[0]);
+    setGif("");
   };
+
+  const squeezeAnim = () => {
+    const squeezeKeyFrames = [
+      {
+        transform: "rotateY(30deg) scale(1)",
+        easing: "ease-in-out",
+      },
+      {
+        transform: "rotateY(30deg) translateZ(-50px) scale(0.5)",
+        easing: "ease-in-out",
+      },
+    ];
+    convertBtnCubeRef.current.animate(squeezeKeyFrames, 150);
+  };
+
   const convertToGif = async () => {
+    squeezeAnim();
     // write the file to the memory
     try {
       ffmpeg.FS("writeFile", "test.mp4", await fetchFile(video));
@@ -50,36 +69,42 @@ function App() {
 
   return (
     <div className={style.App}>
-      <header className={style.title}>
+      <header className={classNames(style.title, style.iso_container)}>
         <Cube>
           <h1 style={{ padding: "2rem" }}>GIF it</h1>
         </Cube>
       </header>
 
       <If condition={ready}>
-        <Cube>
-          <section className={style.video_upload}>
-            <p>Upload video file to convert to animated gif</p>
-            <If condition={video}>
-              <div>
-                <video
-                  controls
-                  width={400}
-                  src={video ? URL.createObjectURL(video) : ""}
-                />
-              </div>
-            </If>
-            <div className={style.controls}>
-              <FileUploader onChange={handleFileUpload} />
-              <If condition={video}>
-                <button onClick={convertToGif}>Convert</button>
-              </If>
-            </div>
-          </section>
-        </Cube>
-        <section className={style.gif_result}>
-          <If condition={gif}>
+        <section
+          className={classNames(style.video_upload, style.iso_container)}
+        >
+          <Cube>
+            <p style={{ padding: "2rem" }}>
+              Upload video file to convert to animated gif
+            </p>
+          </Cube>
+          <If condition={video}>
             <Cube>
+              <video
+                controls
+                width={400}
+                src={video ? URL.createObjectURL(video) : ""}
+              />
+            </Cube>
+          </If>
+        </section>
+        <div className={classNames(style.controls, style.iso_container)}>
+          <FileUploader onChange={handleFileUpload} />
+          <If condition={video}>
+            <Cube ref={convertBtnCubeRef}>
+              <button onClick={convertToGif}>Convert</button>
+            </Cube>
+          </If>
+        </div>
+        <section className={classNames(style.gif_result, style.iso_container)}>
+          <If condition={gif}>
+            <Cube yangle={-30}>
               <img width={250} src={gif} />
             </Cube>
           </If>

@@ -2,21 +2,26 @@
   --content-width: 100px;
   --cube-width: 100px;
   --cube-height: 100px;
-  --cube-depth: calc(var(--cube-height) / 2);
-  --face-color: rgba(97, 239, 156, 1);
-  --face-border: rgba(39, 43, 40, 0.452);
+  --cube-depth: 50px;
+  --face-color: rgba(80, 136, 80, 0.19);
+  --face-border: rgba(66, 245, 147, 0.626);
   --face-border-width: 1px;
+  --cube-x-angle: 0deg;
+  --cube-y-angle: 30deg;
   position: relative;
-  transform-style: preserve-3d;
-  transform: rotateX(-10deg) rotateY(30deg);
-  transform-origin: center center 0;
   /*important - 
   1. use this grid to align all divs one below other in a stack
   2. position the divs relative to original position to form a cube
   */
+  width: var(--cube-width);
+  height: var(--cube-height);
   display: grid;
   place-items: center;
   grid-template-areas: "cube-container";
+  transform: rotateX(var(--cube-x-angle)) rotateY(var(--cube-y-angle));
+  transition: transform 30ms ease-in-out;
+  transform-style: preserve-3d;
+  transform-origin: center center 0;
 }
 
 .cube_face {
@@ -28,39 +33,39 @@
 }
 
 .front_face {
-  transform: translateZ(var(--cube-depth));
+  transform: translateZ(calc(var(--cube-depth) / 2));
   min-width: max-content;
   min-height: max-content;
 }
 
 .back_face {
-  transform: translateZ(calc((var(--cube-height) / 2) * -1));
+  transform: translateZ(calc(var(--cube-depth) / 2 * -1));
   width: var(--cube-width);
   height: var(--cube-height);
 }
 
 .top_face {
-  transform: rotateX(90deg) translateZ(var(--cube-depth));
+  transform: rotateX(90deg) translateZ(calc(var(--cube-height) / 2));
   width: var(--cube-width);
-  height: var(--cube-height);
+  height: var(--cube-depth);
 }
 
 .bottom_face {
-  transform: rotateX(90deg) translateZ(calc(var(--cube-depth) * -1));
+  transform: rotateX(90deg) translateZ(calc(var(--cube-height) / 2 * -1));
   width: var(--cube-width);
-  height: var(--cube-height);
+  height: var(--cube-depth);
 }
 
 .right_face {
-  left: 50%;
+  left: calc(var(--cube-width) / 2);
   transform: rotateY(90deg);
-  width: var(--cube-height);
+  width: var(--cube-depth);
   height: var(--cube-height);
 }
 
 .left_face {
-  left: -50%;
+  left: calc(var(--cube-width) / -2);
   transform: rotateY(90deg);
-  width: var(--cube-height);
+  width: var(--cube-depth);
   height: var(--cube-height);
 }
