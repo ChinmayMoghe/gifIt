@@ -2,7 +2,7 @@
   padding: 1rem;
   display: grid;
   place-items: center;
-  grid-template-rows: auto repeat(3, 1fr);
+  grid-template-rows: auto repeat(5, auto);
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   min-height: 100vh;
@@ -12,7 +12,7 @@
   text-align: center;
   grid-area: 1/1/2 / span 2;
   /* temporary fix for position - hacky solution */
-  margin: 100px 0 0 0;
+  margin: 20px 0 0 0;
 }
 
 .video_upload,
@@ -34,5 +34,13 @@
 .controls {
   display: flex;
   justify-content: space-around;
-  width: 100%;
+  width: 60%;
+  min-width: 200px;
+  padding: 1rem;
+}
+
+.iso_container {
+  transform-origin: center center 0;
+  transform: rotateX(-10deg);
+  transform-style: preserve-3d;
 }
